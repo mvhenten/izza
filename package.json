@@ -1,0 +1,28 @@
+{
+  "name": "izza",
+  "version": "0.0.1",
+  "description": "Simple type chekcs",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mvhenten/izza.git"
+  },
+  "keywords": [
+    "type",
+    "check",
+    "types"
+  ],
+  "author": "Matthijs van Henten",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mvhenten/izza/issues"
+  },
+  "homepage": "https://github.com/mvhenten/izza",
+  "devDependencies": {
+    "tape": "^4.0.0",
+    "watchy": "^0.6.2"
+  }
+}
