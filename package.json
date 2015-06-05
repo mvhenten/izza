@@ -1,7 +1,7 @@
 {
   "name": "izza",
   "version": "0.0.1",
-  "description": "Simple type chekcs",
+  "description": "Simple type checks",
   "main": "index.js",
   "scripts": {
     "test": "npm test"
@@ -24,5 +24,9 @@
   "devDependencies": {
     "tape": "^4.0.0",
     "watchy": "^0.6.2"
+  },
+  "dependencies": {
+    "isa-plain-function": "0.0.1",
+    "sliced": "0.0.5"
   }
 }
