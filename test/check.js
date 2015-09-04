@@ -1,60 +1,90 @@
-'use strict';
+ 'use strict';
 
-var test = require('tape'),
-    check = require('../index').check;
+ var test = require('tape'),
+     check = require('../index').check;
 
-test('Classes with a name get pretty errors', function(assert) {
-    function Type(value) {
-        return true;
-    }
+ test('Unnamed custom types best efford: returning boolean', function(assert) {
+     var anonType = function(value) {
+         return /\w+/.test(value) && (typeof value == "string");
+     };
 
-    function TypeClass() {
-        return true;
-    }
+     assert.equal(check(anonType, new anonType()).toString(), 'TypeError: "[object Object]" is not a "function", it is a "[instanceof Function]"');
+     assert.equal(check(anonType, "foo"), undefined, "anon type passes");
+     assert.equal(check(anonType, "*").toString(), 'TypeError: "*" is not a "function", it is a "string"');
 
-    TypeClass.prototype = {
-        foo: 'bar'
-    };
+     assert.end();
+ });
 
-    assert.ok(check(1, Type), 'check passes for named Type');
-    assert.equal(check(1, TypeClass), '"1" is not an instanceof "TypeClass", it is a "Number"');
-    assert.ok(new TypeClass(), TypeClass, 'TypeClass has a prototype, it is not a plain function');
+ test('Unnamed custom types best efford: returning error', function(assert) {
+     var anonType = function(value) {
+         return /\d+/.test(value) ? undefined : new Error("not like a number");
+     };
 
-    assert.end();
-});
+     assert.equal(check(anonType, new anonType()).toString(), 'Error: not like a number');
+     assert.equal(check(anonType, "123"), undefined, "anon type passes");
 
-test('Anonymous classes are still typechecked', function(assert) {
-    var TypeClass = function() {
-        return true;
-    };
+     assert.end();
+ });
 
-    TypeClass.prototype = {
-        foo: 'bar'
-    };
+ test('Custom types with a name get pretty errors', function(assert) {
+     function Type(value) {
+         return /\d+/.test(value);
+     }
 
-    assert.equal(check(1, TypeClass), '"1" is not an instanceof "[anonymous Function]", it is a "Number"');
-    assert.equal(check(1, new TypeClass()), 'Input Error: type is not an instanceof Function');
-    assert.ok(new TypeClass(), TypeClass, 'instanceof check ok');
+     assert.equal(check(Type, "foo").toString(), 'TypeError: "foo" is not a "Type", it is a "string"');
+     assert.equal(check(Type, 1), undefined, 'check passes for named Type');
+     assert.equal(check(Type, new Type()).toString(), 'TypeError: "[object Object]" is not a "Type", it is a "[instanceof Type]"');
 
-    assert.end();
-});
+     assert.end();
+ });
 
-test('Pretty errors: get the "name" of value', function(assert) {
-    function Type() {};
+ test('Classes with a name get pretty errors', function(assert) {
+     function TypeClass() {
+         return true;
+     }
 
-    var dt = new Date();
+     TypeClass.prototype = {
+         foo: 'bar'
+     };
 
-    assert.equal(check(dt, Type), '"' + dt + '" is not a "Type", it is a "Date"');
-    assert.equal(check([], Type), '"" is not a "Type", it is a "Array"');
-    assert.equal(check(undefined, Type), '"undefined" is not a "Type", it is a "undefined"');
-    assert.equal(check(null, Type), '"null" is not a "Type", it is a "null"');
-    assert.equal(check(false, Type), '"false" is not a "Type", it is a "Boolean"');
-    assert.equal(check(1, Type), '"1" is not a "Type", it is a "Number"');
-    assert.equal(check(new Buffer([]), Type), '"" is not a "Type", it is a "Buffer"');
-    assert.equal(check(function() {}, Type), '"function () {}" is not a "Type", it is a "Function"');
-    assert.equal(check(new Type(), Type), '"[object Object]" is not a "Type", it is a "Type"');
+     assert.equal(check(TypeClass, 1).toString(), 'TypeError: "1" is not a "TypeClass", it is a "number"');
+     assert.equal(check(TypeClass, new TypeClass()), undefined, 'TypeClass has a prototype, it is not a plain function');
 
-    assert.end();
+     assert.end();
+ });
 
+ test('Anonymous classes are still typechecked', function(assert) {
+     var TypeClass = function() {
+         return true;
+     };
 
-})
+     TypeClass.prototype = {
+         foo: 'bar'
+     };
+
+     assert.equal(check(TypeClass, 1).toString(), 'TypeError: "1" is not a "function", it is a "number"');
+     assert.equal(check(new TypeClass(), 1).toString(), 'TypeError: First argument "type" is not an instanceof Function');
+     assert.ok(new TypeClass(), TypeClass, 'instanceof check ok');
+
+     assert.end();
+ });
+
+ test('Pretty errors: get the "name" of value', function(assert) {
+     function Type() {
+         return false;
+     }
+
+     var dt = new Date();
+
+     assert.equal(check(Type, dt).toString(), 'TypeError: "' + dt + '" is not a "Type", it is a "[instanceof Date]"');
+     assert.equal(check(Type, []).toString(), 'TypeError: "" is not a "Type", it is a "[instanceof Array]"');
+     assert.equal(check(Type, undefined).toString(), 'TypeError: "undefined" is not a "Type", it is a "undefined"');
+     assert.equal(check(Type, null).toString(), 'TypeError: "null" is not a "Type", it is a "null"');
+     assert.equal(check(Type, false).toString(), 'TypeError: "false" is not a "Type", it is a "boolean"');
+     assert.equal(check(Type, 1).toString(), 'TypeError: "1" is not a "Type", it is a "number"');
+     assert.equal(check(Type, new Buffer([])).toString(), 'TypeError: "" is not a "Type", it is a "[instanceof Buffer]"');
+     assert.equal(check(Type, function() {}).toString(), 'TypeError: "function () {}" is not a "Type", it is a "function"');
+     assert.equal(check(Type, new Type()).toString(), 'TypeError: "[object Object]" is not a "Type", it is a "[instanceof Type]"');
+
+     assert.end();
+ });
