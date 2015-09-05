@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/mvhenten/izza",
   "devDependencies": {
+    "async": "^1.4.2",
     "tape": "^4.0.0",
     "watchy": "^0.6.2"
   },
