@@ -1,13 +1,11 @@
 "use strict";
 
-var sliced = require('sliced');
-var check = require('../index').check;
-var format = require('./util').format;
-var typeName = require('./util').typeName;
+const sliced = require('sliced');
+const check = require('./check');
+const format = require('util').format;
 
 function Tuple(args) {
     var types = sliced(arguments);
-
 
     return function Tuple(value) {
         var err = check(value, Array);
@@ -45,17 +43,13 @@ function Maybe(type) {
 
 module.exports.Maybe = Maybe;
 
-function Enum(options, strict) {
+function Enum(options, loose) {
     return function Enum(value) {
-        for (var i = 0; i < options.length; i++) {
-            if (strict) {
-                console.log(value === options[i], value, options[i]);
-                if (value === options[i]) return true;
-            }
-            else {
-                if (value == options[i]) return true;
-            }
-        }
+        if (options.includes(value))
+            return true;
+            
+        if (loose)
+            return options.some(option => option == value);
 
         return new TypeError(format('Invalid value in Enum: %s is not one of %s', value, options));
     };

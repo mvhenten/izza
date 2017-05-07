@@ -1,13 +1,13 @@
 'use strict';
 
-var test = require('tape'),
-    check = require('../index').check;
+const test = require('tape'),
+    check = require('./check');
 
-var Types = require('../lib/types');
+const Types = require('./types');
 
 test('Tuple', function(assert) {
 
-    var type = Types.Tuple(Number, Boolean);
+    const type = Types.Tuple(Number, Boolean);
 
     assert.ok(check([1, true], type), 'Typecheck passes');
 
@@ -20,7 +20,7 @@ test('Tuple', function(assert) {
 
 test('Maybe', function(assert) {
 
-    var type = Types.Maybe(Number);
+    const type = Types.Maybe(Number);
 
     assert.ok(check(999, type), 'Typecheck passes for a Number');
     assert.ok(check(null, type), 'Typecheck passes for Null');
@@ -38,17 +38,13 @@ test('Enum', function(assert) {
         assert.ok(check(option, type), 'Typecheck passes for ' + option);
     });
 
-    assert.ok(check(1, type), 'non-strict typeCheck performs coercion');
-    assert.deepEqual(check('x', type), new TypeError('Invalid value in Enum: x is not one of a,b,c,1'));
-
-    var strictOptions = ['1', '2', '3'];
-    var strictType = Types.Enum(strictOptions, true);
-
-    strictOptions.forEach(function(option) {
-        assert.equal(check(option, strictType), true, 'strict Typecheck passes for ' + option);
-    });
-
-    assert.deepEqual(check(1, strictType), new TypeError('TypeError: Invalid value in Enum: 1 is not one of 1,2,3'));
-
+    assert.deepEqual(check(1, type), new TypeError('TypeError: Invalid value in Enum: 1 is not one of 1,2,3'));
     assert.end();
+});
+
+test("Enum, not strict", function(assert) {
+   const options = [1];
+   const type = Types.Enum(options, false);
+   assert.ok(check("1", type), "Passes stringy one for non-strict comparison");
+   assert.end();
 });

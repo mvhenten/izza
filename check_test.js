@@ -1,21 +1,22 @@
- 'use strict';
+  'use strict';
 
  var test = require('tape'),
-     check = require('../index').check;
+     check = require('./check');
 
- test('Unnamed custom types best efford: returning boolean', function(assert) {
+
+ test('Unnamed custom types best efford: returning when type check returns boolean true', function(assert) {
      var anonType = function(value) {
          return /\w+/.test(value) && (typeof value == "string");
      };
 
-     assert.equal(check(anonType, new anonType()).toString(), 'TypeError: "[object Object]" is not a "function", it is a "[instanceof Function]"');
+     assert.equal(check(anonType, new anonType()).toString(), 'TypeError: "[object Object]" is not a "anonType", it is a "[instanceof anonType]"');
      assert.equal(check(anonType, "foo"), undefined, "anon type passes");
-     assert.equal(check(anonType, "*").toString(), 'TypeError: "*" is not a "function", it is a "string"');
+     assert.equal(check(anonType, "*").toString(), 'TypeError: "*" is not a "anonType", it is a "string"');
 
      assert.end();
  });
 
- test('Unnamed custom types best efford: returning error', function(assert) {
+ test('Unnamed custom types best efford: type check returns error', function(assert) {
      var anonType = function(value) {
          return /\d+/.test(value) ? undefined : new Error("not like a number");
      };
@@ -62,7 +63,7 @@
          foo: 'bar'
      };
 
-     assert.equal(check(TypeClass, 1).toString(), 'TypeError: "1" is not a "function", it is a "number"');
+     assert.equal(check(TypeClass, 1).toString(), 'TypeError: "1" is not a "TypeClass", it is a "number"');
      assert.equal(check(new TypeClass(), 1).toString(), 'TypeError: First argument "type" is not an instanceof Function');
      assert.ok(new TypeClass(), TypeClass, 'instanceof check ok');
 

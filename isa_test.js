@@ -3,7 +3,7 @@
  var test = require('tape'),
      partal = require('partal'),
      async = require('async'),
-     isa = require('../index').isa;
+     isa = require('./isa');
 
  test('isa returns true or false', function(assert) {
 
@@ -88,4 +88,3 @@
          assert.end();
      });
  });
- 
