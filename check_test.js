@@ -1,11 +1,11 @@
   'use strict';
 
- var test = require('tape'),
+ const test = require('tape'),
      check = require('./check');
 
 
  test('Unnamed custom types best efford: returning when type check returns boolean true', function(assert) {
-     var anonType = function(value) {
+     const anonType = function(value) {
          return /\w+/.test(value) && (typeof value == "string");
      };
 
@@ -17,7 +17,7 @@
  });
 
  test('Unnamed custom types best efford: type check returns error', function(assert) {
-     var anonType = function(value) {
+     const anonType = function(value) {
          return /\d+/.test(value) ? undefined : new Error("not like a number");
      };
 
@@ -55,7 +55,7 @@
  });
 
  test('Anonymous classes are still typechecked', function(assert) {
-     var TypeClass = function() {
+     const TypeClass = function() {
          return true;
      };
 
@@ -75,7 +75,7 @@
          return false;
      }
 
-     var dt = new Date();
+     const dt = new Date();
 
      assert.equal(check(Type, dt).toString(), 'TypeError: "' + dt + '" is not a "Type", it is a "[instanceof Date]"');
      assert.equal(check(Type, []).toString(), 'TypeError: "" is not a "Type", it is a "[instanceof Array]"');

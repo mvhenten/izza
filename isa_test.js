@@ -1,6 +1,6 @@
  'use strict';
 
- var test = require('tape'),
+ const test = require('tape'),
      partal = require('partal'),
      async = require('async'),
      isa = require('./isa');
@@ -33,7 +33,7 @@
 
  test('isa can be partial', function(assert) {
 
-     var check = isa(Number);
+     const check = isa(Number);
 
      assert.ok(check(1), "isa can be partially applied");
      assert.equal(check("foo"), false, "returns false when check fails");

@@ -1,7 +1,7 @@
 'use strict';
 
-var isPlainFunction = require('isa-plain-function');
-var format = require('util').format;
+const isPlainFunction = require('isa-plain-function');
+const format = require('util').format;
 const name = require("./lib/name");
 
 
@@ -27,7 +27,7 @@ module.exports = function check(type, value) {
         if (!((type instanceof Function) || (type instanceof RegExp)))
             return new TypeError('First argument "type" is not an instanceof Function');
 
-        var err = typeCheck(type, value);
+        let err = typeCheck(type, value);
         
         if (err instanceof Error)
             return err;

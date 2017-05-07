@@ -1,6 +1,6 @@
 'use strict';
 
-var Izza = {
+const Izza = {
     check: require("./check"),
     isa: require("./isa"),
     assert: require("./assert")

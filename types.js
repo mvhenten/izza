@@ -5,10 +5,10 @@ const check = require('./check');
 const format = require('util').format;
 
 function Tuple(args) {
-    var types = sliced(arguments);
+    const types = sliced(arguments);
 
     return function Tuple(value) {
-        var err = check(value, Array);
+        const err = check(value, Array);
 
         if (err !== true)
             return new TypeError("Invalid Tuple: value should be an array");
@@ -16,7 +16,7 @@ function Tuple(args) {
         if (value.length !== types.length)
             return new TypeError(format('Invalid Tuple: expected %s items, got %s', types.length, value.length));
 
-        for (var i = 0; i < types.length; i++) {
+        for (const i = 0; i < types.length; i++) {
             err = check(value[i], types[i]);
             if (err !== true)
                 return new TypeError(format('Invalid Tuple: item %s: %s', i, err));
@@ -32,7 +32,7 @@ function Maybe(type) {
         if (value === null || value === undefined)
             return true;
 
-        var err = check(value, type);
+        const err = check(value, type);
 
         if (err === true)
             return err;

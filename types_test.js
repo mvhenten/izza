@@ -31,8 +31,8 @@ test('Maybe', function(assert) {
 });
 
 test('Enum', function(assert) {
-    var options = ['a', 'b', 'c', '1'];
-    var type = Types.Enum(options);
+    const options = ['a', 'b', 'c', '1'];
+    const type = Types.Enum(options);
 
     options.forEach(function(option) {
         assert.ok(check(option, type), 'Typecheck passes for ' + option);
