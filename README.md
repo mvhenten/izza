@@ -15,10 +15,10 @@ invoked asynchrounous.
 ### Simple type checks
 
 ```javascript
-const isa = require("izza/isa);
+const isa = require("izza/isa");
 
-assert.ok(isa(Number, 1), "It's a number");
-assert.equal(isa(Number, "1"), false, "It's not a number");
+assert.ok(isa(Number, 1), "It is a number");
+assert.equal(isa(Number, "1"), false, "not a number");
 ```
 
 ### Async type checks
@@ -27,10 +27,10 @@ When running in async mode, izza returns a javascript `TypeError` with useful
 information about the type being checked:
 
 ```javascript
-const isa = require("izza/isa);
+const isa = require("izza/isa");
 
 isa(Number, 1, (err) => {
-    assert.ok(!err, "No error was returned, it's a number");
+    assert.ok(!err, "No error was returned, it is a number");
 });
 
 isa(Number, "1", (err) => {
@@ -71,7 +71,7 @@ Throws an error if returned by check
 
 A small utility collection of useful types:
 
-```
+```javascript
 const Types = require("izza/types");
 
 const MaybeNumber = Types.Maybe(Number);
