@@ -26,13 +26,11 @@
   "homepage": "https://github.com/mvhenten/izza",
   "devDependencies": {
     "async": "^1.4.2",
-    "tape": "^4.0.0",
-    "watchy": "^0.6.2"
+    "tape": "^4.6.3",
+    "type-name": "^2.0.2"
   },
   "dependencies": {
-    "isa-plain-function": "2.0.0",
-    "partal": "0.0.1",
-    "sliced": "0.0.5",
-    "type-name": "^1.0.1"
+    "isa-plain-function": "^2.0.0",
+    "partal": "0.0.1"
   }
 }

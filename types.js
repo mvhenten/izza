@@ -1,12 +1,9 @@
 "use strict";
 
-const sliced = require('sliced');
 const check = require('./check');
 const format = require('util').format;
 
-function Tuple(args) {
-    const types = sliced(arguments);
-
+function Tuple(...types) {
     return function Tuple(value) {
         const err = check(value, Array);
 
