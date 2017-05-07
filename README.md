@@ -2,22 +2,22 @@
 
 Yet another typecheck lib.
 
-# Installation
-
-    npm install izza
-    
-# Usage
-
-While I am aware that there are many alternatives, I wanted something that would 
-return a boolean false/true in synchronous mode, and a pretty formatted error when
-invoked asynchrounous.
-
 # Features
 
 * Errors produce a human-readable string
 * Validates native types `/Boolean|Number|String|RegExp|Array|Object|Date|Function/`
 * Super simple API for custom types
 * Understands "instanceof" types for es5 classes (es6 work in progress)
+
+# Installation
+
+    npm install izza
+
+# Usage
+
+While I am aware that there are many alternatives, I wanted something that would 
+return a boolean false/true in synchronous mode, and a pretty formatted error when
+invoked asynchrounous.
 
 ### Simple type checks
 
