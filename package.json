@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Simple type checks",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "scripts": {
     "test": "tape **/*_test.js"
   },
@@ -27,7 +30,7 @@
     "watchy": "^0.6.2"
   },
   "dependencies": {
-    "isa-plain-function": "0.0.1",
+    "isa-plain-function": "2.0.0",
     "partal": "0.0.1",
     "sliced": "0.0.5",
     "type-name": "^1.0.1"
