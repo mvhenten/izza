@@ -1,6 +1,6 @@
 {
   "name": "izza",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple type checks",
   "main": "index.js",
   "engines": {
@@ -26,11 +26,11 @@
   "homepage": "https://github.com/mvhenten/izza",
   "devDependencies": {
     "async": "^1.4.2",
-    "tape": "^4.6.3",
-    "type-name": "^2.0.2"
+    "tape": "^4.6.3"
   },
   "dependencies": {
     "isa-plain-function": "^2.0.0",
-    "partal": "0.0.1"
+    "partal": "0.0.1",
+    "type-name": "^2.0.2"
   }
 }
